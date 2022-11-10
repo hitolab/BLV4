@@ -5,9 +5,6 @@ import random
 import serial
 import time
 
-#送受信コマンドに関してはここを見るべき
-#https://github.com/hito1979/BLV/blob/master/src/rs232c/CommunicatorPhotomul.java
-
 class Photomal:
 
     measuring_cycle = 60 #60秒間隔で測定(実際は10分くらいで良いと思う);
@@ -29,106 +26,102 @@ class Photomal:
         f = open(self.filepath, 'a')
         f.write(dt_now.strftime('%Y-%m-%d-%H-%M-%S ')+str(self.val)+"\n")
         f.close()
-        print("フォトマル{}:".format(self.no)+dt_now.strftime('%Y-%m-%d-%H-%M-%S ')+"計測した")
+        print("PMT{}:".format(self.no)+dt_now.strftime('%Y-%m-%d-%H-%M-%S ')+"measured "+str(self.val))
+        #ここまで定期実行
         t=threading.Timer(Photomal.measuring_cycle, self.measure)
         t.start()
 
     def __getVal(self): #計測データを得る
-        self.val = random.randint(0,100)
-        #接続後こちらを試す
-        #self.val = self.measureOnce()
+        self.val = self.measureOnce()
 
 
     def start(self): #計測開始
         t=threading.Thread(target=self.measure)
         t.start()
 
-    def __command(char, n=""):
+    def __command(self,char, n=""):
         if n == "":
              ret = (char+"\r").encode('utf-8')
-        else:
+        elif n >255:
             ret = char.encode('utf-8') + n.to_bytes(2, byteorder="big")+"\r".encode('utf-8')
+        else:
+            ret = char.encode('utf-8') + n.to_bytes(1, byteorder="big")+"\r".encode('utf-8')
         return ret
 
     def __sendCommand(self, char, n=""):
+        print("SEND PMT{}: {} {}".format(self.no, char, n))
         if n == "":
             self.ser.write(self.__command(char))
         else:
             self.ser.write(self.__command(char, n))
 
-    def __readMessage(self):
-        line = self.ser.readline()
-        line = line.strip().decode('UTF-8')
-        print(line)
-        return line
+    def __readMessage(self, num):
+        receivedMsg =""
+        for i in range(num):
+            char = self.ser.read()
+            char = char.strip().decode('UTF-8')
+            receivedMsg = receivedMsg + char
+        print("RECEIVE PMT{}: {}".format(self.no, receivedMsg))
+        return receivedMsg
 
-    def __sendAndListen(self, mes):
-        ans = ""
-        self.__sendCommand(mes)
-        time.sleep(3000)
-        ans = self.__readMessage()
+    def __sendAndListen(self, mes, n=""):
+        self.__sendCommand(mes, n)
+        time.sleep(1)
+        ans = self.__readMessage(2)
         return ans
 
     def checkConnection(self):
         ans = False
-        text = self.__sendAndListen("D").substring(0, 2)
-        print("checkPort:")
+        text = self.__sendAndListen("D")
+        print("checkPort... ", end="")
         if text == "VA":
             print("Port Open!")
+            ans = True
         else:
             print("Port was not opened")
-            ans = True
+
         return ans
 
     def __initialize_communication(self):
         if self.no == 1:
-            comport = "COM3"
+            comport = "COM1"
         elif self.no == 2:
-            comport = "COM4"
+            comport = "COM2"
         elif self.no == 3:
-            comport = "COM5"
+            comport = "COM3"
         elif self.no == 4:
-            comport = "COM6"
+            comport = "COM4"
 
         self.ser = serial.Serial(comport, baudrate=9600, parity=serial.PARITY_NONE)
-        isConnected = self.__checkConnection()
+        isConnected = self.checkConnection()
 
         if isConnected == True:
-            self.__sendCommand("D")
-            self.__sendCommand("V",Photomal.PMT_VOLTAGE)
-            self.__sendcommand("P",Photomal.PMT_integraltime)
-            self.__sendcommand("R",Photomal.PMT_measureTimes)
+            self.__sendAndListen("V",Photomal.PMT_VOLTAGE)
+            self.__sendAndListen("P",Photomal.PMT_integraltime)
+            self.__sendAndListen("R",Photomal.PMT_measureTimes)
 
     def __readCount(self):
-        b0 = self.ser.read().strip().decode('UTF-8')
-        b1 = self.ser.read().strip().decode('UTF-8')
-        b2 = self.ser.read().strip().decode('UTF-8')
-        b3 = self.ser.read().strip().decode('UTF-8')
-        print(b0)
-        print(b1)
-        print(b2)
-        print(b3)
-        print("これを数字に直す必要あり、4ビット単位？")
-        #int b0=(buf[0] & 0xff)*256*256*256;
-		#int b1 =(buf[1] & 0xff)*256*256;
-		#int b2 = (buf[2] & 0xff)*256;
-		#int b3 = (buf[3] & 0xff);
+        b0 = int.from_bytes(self.ser.read(),'big')*256*256*256
+        b1 = int.from_bytes(self.ser.read(),'big')*256*256
+        b2 = int.from_bytes(self.ser.read(),'big')*256
+        b3 = int.from_bytes(self.ser.read(),'big')
+
 		#System.out.println(b3);
-		#ans = b0+b1+b2+b3;
+        return b0+b1+b2+b3
 
     def measureOnce(self):
         self.__sendCommand("S")
-        time.sleep(1)
+        time.sleep(2)
         ans = self.__readCount()
         return ans
 
 
 if __name__=='__main__':
     pm1 = Photomal(1) #フォトマル1を選択;
-    pm2 = Photomal(2) #フォトマル2を選択
+    #pm2 = Photomal(2) #フォトマル2を選択
     pm1.start()
-    pm2.start()
+    #pm2.start()
 
     #接続後これを試す
-    pm1.__initialize_communication()
-    pm1.measureOnce()
+    #pm1.__initialize_communication()
+    #print(pm1.measureOnce())
