@@ -117,11 +117,7 @@ class Photomal:
 
 
 if __name__=='__main__':
-    pm1 = Photomal(1) #フォトマル1を選択;
-    #pm2 = Photomal(2) #フォトマル2を選択
-    pm1.start()
-    #pm2.start()
-
-    #接続後これを試す
-    #pm1.__initialize_communication()
-    #print(pm1.measureOnce())
+    pm1 = Photomal(1) #フォトマル1を起動
+    #pm2 = Photomal(2) #フォトマル2を起動
+    pm1.start() #周期的測定開始
+    #pm2.start() #周期的測定開始
