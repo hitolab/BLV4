@@ -28,7 +28,7 @@ window = sg.Window('Graph', layout, finalize=True, resizable=True)
 
 # 更新するたびに新しく読み込む必要があるもの
 
-
+#テスト用コメント
 # figureを作成する関数
 def make_figure(filePath):
     y = gd.getData(filePath)[1]
