@@ -1,6 +1,5 @@
 import glob
 
-
 def getData(path):
     count = []
     time = []
@@ -15,10 +14,10 @@ def getData(path):
     for i in D:
         if j % 2 == 0:
             print(i)
-            time.append(int(i[17:]))
+            time.append(i[0:10])
         else:
             print(i)
             count.append(int(i))
         j = j + 1
 
-    return count
+    return count,time

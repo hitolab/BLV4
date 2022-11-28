@@ -5,6 +5,7 @@ import getData as gd
 import time
 import threading
 from Photomal import Photomal
+import os
 
 # 読み込むファイル
 # Macなら上、Windowsなら下の書き方
@@ -18,10 +19,12 @@ layout = [
 ]
 # windowを作成
 window = sg.Window('Graph', layout, finalize=True, resizable=True)
+name = []
 
 # figureを作成する関数
 def make_figure(filePath):
-    y = gd.getData(filePath)
+    y = gd.getData(filePath)[0]
+    time = gd.getData(filePath)[1]
     x = range(0, len(y))
     fig = plt.figure()
     ax = fig.add_subplot()
@@ -30,7 +33,7 @@ def make_figure(filePath):
     ax.set_ylabel("count")
     ax.set_xlim(0, 20)
 
-    return fig
+    return fig,time
 
 def draw_figure(canvas, figure):
     # # 更新処理がされた時に一旦グラフを消去する
@@ -45,8 +48,16 @@ def draw_figure(canvas, figure):
 
 # 更新処理：図の再プロット＋キャンバスに再配置
 def update():
-    drawing_fig1 = make_figure(filePath1)
+    drawing_fig1 = make_figure(filePath1)[0]
     draw_figure(window['figure_cv1'].TKCanvas, drawing_fig1)
+
+def savefig(Path):
+    fig = make_figure(Path)[0]
+    time = make_figure(Path)[1]
+    print(time[0])
+    dirname = "fig/"
+    os.makedirs(dirname,exist_ok=True)
+    fig.savefig(dirname + time[0] + '.jpg')
 
 if __name__ == '__main__':
     pm1 = Photomal(1)
@@ -68,3 +79,4 @@ if __name__ == '__main__':
             update()
             time.sleep(2)
 
+    savefig(filePath1)
