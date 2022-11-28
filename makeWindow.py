@@ -2,13 +2,10 @@ import PySimpleGUI as sg
 import matplotlib.pyplot as plt
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 import getData as gd
-import math
 import time
 import threading
-
 from Photomal import Photomal
 
-# 場合にかかわらず最初に設定するもの
 # 読み込むファイル
 # Macなら上、Windowsなら下の書き方
 # filePath1 = 'BLV4/results/1/*.txt'
@@ -22,9 +19,6 @@ layout = [
 # windowを作成
 window = sg.Window('Graph', layout, finalize=True, resizable=True)
 
-# 更新するたびに新しく読み込む必要があるもの
-
-#テスト用コメント
 # figureを作成する関数
 def make_figure(filePath):
     y = gd.getData(filePath)
@@ -38,9 +32,6 @@ def make_figure(filePath):
     ax.set_xlim(0, 20)
 
     return fig
-
-# グラフをgui window上のcanvasに描画する関数
-
 
 def draw_figure(canvas, figure):
     # # 更新処理がされた時に一旦グラフを消去する
@@ -58,39 +49,12 @@ def update():
     drawing_fig1 = make_figure(filePath1)
     draw_figure(window['figure_cv1'].TKCanvas, drawing_fig1)
 
-
-update()
-
-# 1分毎に実行する処理
-
-
-# def show_window():
-#     update()
-#     event, values = window.read(timeout=100,timeout_key='-timeout-')
-
-#     if event in (sg.WIN_CLOSED, 'Cancel'):
-#         window.close
-#         time.sleep(3)
-#         print("再起動")
-#         show_window()
-#     elif event == "ReLoad":
-#         update()
-#         # 縮小するけど更新
-#         show_window()
-#     elif event in '-timeout-':
-#         print("timeout")
-
-# show_window()
-
-
 if __name__ == '__main__':
-#     t = threading.Thread(target=show_window)
-#     t.start()
-
     pm1 = Photomal(1)
     pm1.start()
     thread = pm1.measure
 
+    update()
     while True:
         event, values = window.read(timeout=3000,timeout_key='-timeout-')
 
