@@ -23,7 +23,6 @@ window = sg.Window('Graph', layout, finalize=True, resizable=True)
 def make_figure(filePath):
     y = gd.getData(filePath)
     x = range(0, len(y))
-
     fig = plt.figure()
     ax = fig.add_subplot()
     ax.plot(x, y)
@@ -60,7 +59,6 @@ if __name__ == '__main__':
 
         if event in (sg.WIN_CLOSED, 'Cancel'):
             break
-
         elif event == 'ReLoad':
             update()
         elif event in '-timeout-':

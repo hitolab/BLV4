@@ -1,12 +1,4 @@
-import matplotlib.pyplot as plt
-import numpy as np
 import glob
-import re
-import os
-
-# 読み込むファイル指定
-# filePath = '/Applications/Python/ItoLab/BLV4/results/2/*.txt'
-
 
 
 def getData(path):
@@ -17,7 +9,6 @@ def getData(path):
     f = open(file[-1], 'r')
     data = f.read()
     f.close
-
     # 時間と数値に分解
     D = data.split()
     j = 0
