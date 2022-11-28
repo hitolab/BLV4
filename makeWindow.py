@@ -5,18 +5,12 @@ import getData as gd
 import math
 import time
 import threading
-from Photomal import Photomal, Printer
-
-# gui上のfigureを描画するcanvasを定義
-# def makeFigureCanvas():
-#     figure_canvas = sg.Canvas(key='figure_cv1',
-#                               # ! サイズを確保しておく。
-#                               size=(500 * 2, 800))
-#     return figure_canvas
+# from Photomal import Photomal
 
 # 場合にかかわらず最初に設定するもの
 # 読み込むファイル
-filePath1 = 'BLV4/results/1/*.txt'
+# filePath1 = 'BLV4/results/1/*.txt'
+filePath1 = "C:\\Users\\今井圭子\\Documents\\BLV4\\results\\1\\*.txt"
 # グラフ用のキャンバス
 figure_canvas1 = sg.Canvas(key='figure_cv1', size=(500 * 2, 800))
 # 画面の構成
@@ -31,7 +25,7 @@ window = sg.Window('Graph', layout, finalize=True, resizable=True)
 #テスト用コメント
 # figureを作成する関数
 def make_figure(filePath):
-    y = gd.getData(filePath)[1]
+    y = gd.getData(filePath)
     x = range(0, len(y))
 
     fig = plt.figure()
@@ -40,7 +34,9 @@ def make_figure(filePath):
     ax.set_xlabel("time")
     ax.set_ylabel("count")
     ax.set_xlim(0, 100)
-    # ax.set_ylim(0, 100)
+
+    # fig.show()
+    # ax.show()
 
     return fig
 
@@ -92,8 +88,8 @@ if __name__ == '__main__':
 #     t = threading.Thread(target=show_window)
 #     t.start()
 
-    pr1 = Printer
-    thread = pr1.do
+    # pr1 = Printer
+    # thread = pr1.do
 
     while True:
         event, values = window.read(timeout=3000,timeout_key='-timeout-')
@@ -106,7 +102,7 @@ if __name__ == '__main__':
         elif event in '-timeout-':
             print("timeout")
             update()
-            threading.Thread(target=pr1.do, daemon=True).start()
+            # threading.Thread(target=pr1.do, daemon=True).start()
 
 
 # event, values = window.read()

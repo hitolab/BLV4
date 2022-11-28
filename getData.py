@@ -14,8 +14,10 @@ def getData(path):
     time = []
     # txtファイルの中身を取得
     file = glob.glob(path)
+    print(file)
     f = open(file[-1], 'r')
     data = f.read()
+    print(data)
     f.close
 
     # 時間と数値に分解
@@ -28,6 +30,4 @@ def getData(path):
             time.append(int(i))
         j = j + 1
 
-    return count, time
-
-# 乱数を生成
+    return count
