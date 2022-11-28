@@ -28,8 +28,8 @@ class Photomal:
         f.close()
         print("PMT{}:".format(self.no)+dt_now.strftime('%Y-%m-%d-%H-%M-%S ')+"measured "+str(self.val))
         #ここまで定期実行
-        t=threading.Timer(Photomal.measuring_cycle, self.measure)
-        t.start()
+        # t=threading.Timer(Photomal.measuring_cycle, self.measure)
+        # t.start()
 
     def __getVal(self): #計測データを得る
         self.val = self.measureOnce()

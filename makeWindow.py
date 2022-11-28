@@ -5,10 +5,12 @@ import getData as gd
 import math
 import time
 import threading
-# from Photomal import Photomal
+
+from Photomal import Photomal
 
 # 場合にかかわらず最初に設定するもの
 # 読み込むファイル
+# Macなら上、Windowsなら下の書き方
 # filePath1 = 'BLV4/results/1/*.txt'
 filePath1 = "C:\\Users\\今井圭子\\Documents\\BLV4\\results\\1\\*.txt"
 # グラフ用のキャンバス
@@ -33,10 +35,7 @@ def make_figure(filePath):
     ax.plot(x, y)
     ax.set_xlabel("time")
     ax.set_ylabel("count")
-    ax.set_xlim(0, 100)
-
-    # fig.show()
-    # ax.show()
+    ax.set_xlim(0, 20)
 
     return fig
 
@@ -88,8 +87,9 @@ if __name__ == '__main__':
 #     t = threading.Thread(target=show_window)
 #     t.start()
 
-    # pr1 = Printer
-    # thread = pr1.do
+    pm1 = Photomal(1)
+    pm1.start()
+    thread = pm1.measure
 
     while True:
         event, values = window.read(timeout=3000,timeout_key='-timeout-')
@@ -101,10 +101,8 @@ if __name__ == '__main__':
             update()
         elif event in '-timeout-':
             print("timeout")
+            threading.Thread(target=pm1.measure, daemon=True).start()
+            time.sleep(2)
             update()
-            # threading.Thread(target=pr1.do, daemon=True).start()
+            time.sleep(2)
 
-
-# event, values = window.read()
-
-# window.close()
