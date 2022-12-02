@@ -23,13 +23,12 @@ class Photomal:
         #ここに定期実行の内容を書く
         dt_now = datetime.datetime.now()
         self.__getVal()
-        f = open(self.filepath, 'a')
-        f.write(dt_now.strftime('%Y-%m-%d-%H-%M-%S ')+str(self.val)+"\n")
-        f.close()
+        with open(self.filepath, 'a') as f:
+            f.write(dt_now.strftime('%Y-%m-%d-%H-%M-%S ')+str(self.val)+"\n")
         print("PMT{}:".format(self.no)+dt_now.strftime('%Y-%m-%d-%H-%M-%S ')+"measured "+str(self.val))
         #ここまで定期実行
-        # t=threading.Timer(Photomal.measuring_cycle, self.measure)
-        # t.start()
+        t=threading.Timer(Photomal.measuring_cycle, self.measure)
+        t.start()
 
     def __getVal(self): #計測データを得る
         self.val = self.measureOnce()
@@ -121,3 +120,5 @@ if __name__=='__main__':
     #pm2 = Photomal(2) #フォトマル2を起動
     pm1.start() #周期的測定開始
     #pm2.start() #周期的測定開始
+
+
