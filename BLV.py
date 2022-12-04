@@ -6,6 +6,7 @@ import numpy as np
 import cv2
 import datetime
 import Photomal
+import glob
 
 cycle = 1 #グラフ更新間隔(秒) (ほんとうは10秒くらいにしたほうが良い)
 
@@ -26,11 +27,11 @@ def splitData(text):
 #さらにいま２つのふぁいるの読み込み先が同じになっていますが、いずれ別々にするのが良いと思います。
 #さらにクリックに応じて、フォトマル1やフォトマル2が計測スタートするようにするといいでしょうね。
 
-def _getData(): 
-    with open("./results/1/0020_1.txt") as f:
+def _getData():
+    with open(glob.glob("./results/1/*.txt")[-1]) as f:
         text1 = f.read().splitlines()
         time1, data1 = splitData(text1)
-    with open("./results/1/0020_1.txt") as f:
+    with open(glob.glob("./results/2/*.txt")[-1]) as f:
         text2 = f.read().splitlines()
         time2, data2 = splitData(text2)
     return time1, data1, time2, data2
