@@ -8,7 +8,7 @@ import datetime
 import Photomal
 import glob
 
-cycle = 1 #グラフ更新間隔(秒) (ほんとうは10秒くらいにしたほうが良い)
+cycle = 10 #グラフ更新間隔(秒) (ほんとうは10秒くらいにしたほうが良い)
 
 def splitData(text):
     epochlist = []
@@ -54,8 +54,8 @@ def BLVrun():
             ax.set_xticks(np.arange(0, 24*(display_days[n]+1), 24))
             for i in range(1,display_days[n]):
                 ax.axvline(x=24*i,linestyle='--',color='black',linewidth=.5)
-        ax1.scatter(time1,data1,color="turquoise")
-        ax2.scatter(time2,data2,color="violet")
+        ax1.scatter(time1,data1,color="turquoise",s=6,alpha=0.6)
+        ax2.scatter(time2,data2,color="violet",s=6,alpha=0.6)
         fig.canvas.draw()
         img = np.array(fig.canvas.renderer.buffer_rgba())
         plt.close()
@@ -67,7 +67,7 @@ def BLVrun():
     cv2.destroyAllWindows()
 
 if __name__=='__main__':
-    pm1 = Photomal(1) #フォトマル1を起動
+    pm1 = Photomal.Photomal(1) #フォトマル1を起動
     pm1.start() #周期的測定開始
     BLVrun()
 
