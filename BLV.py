@@ -54,8 +54,8 @@ def BLVrun():
             ax.set_xticks(np.arange(0, 24*(display_days[n]+1), 24))
             for i in range(1,display_days[n]):
                 ax.axvline(x=24*i,linestyle='--',color='black',linewidth=.5)
-        ax1.scatter(time1,data1,color="turquoise")
-        ax2.scatter(time2,data2,color="violet")
+        ax1.scatter(time1,data1,color="turquoise",s=5,alpha=0.7)
+        ax2.scatter(time2,data2,color="violet",s=5,alpha=0.7)
         fig.canvas.draw()
         img = np.array(fig.canvas.renderer.buffer_rgba())
         plt.close()
