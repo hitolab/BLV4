@@ -1,7 +1,7 @@
 import PySimpleGUI as sg
 import matplotlib.pyplot as plt
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
-import getData as gd
+import unused.getData as gd
 import time
 import threading
 from Photomal import Photomal
