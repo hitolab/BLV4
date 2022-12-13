@@ -44,8 +44,6 @@ def makeFig(path):
 
     for n, ax in enumerate([ax1]):
         ax.tick_params(length=0)
-        print(display_days[n])
-        print(24*display_days[n])
         ax.set_xlim(0, 24*display_days[n])
         ax.set_ylim(0, 2000)
         # x軸のメモリ、0から24*dis_daysまで、24間隔で配置（numpyを使う利点）

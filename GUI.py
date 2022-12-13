@@ -7,8 +7,8 @@ import os
 
 # macかwinでのパス等切り替え
 if os.name == 'nt':
-    data = "results\1\0035_1.txt"
-    saveFile = "results\images"  
+    data = "results/1/0035_1.txt"
+    saveFile = "results/images"  
 elif os.name == 'posix':
     data = "results/1/0035_1.txt"
     saveFile = "results/images"
@@ -83,6 +83,7 @@ if __name__=='__main__':
             break
 
         elif event == '-preview-':
+            print("preview作成")
             if (values['file1']):
                 # 選択したファイルの情報はvalues["file1"]にある
                 data = values['file1']
@@ -95,6 +96,7 @@ if __name__=='__main__':
                 window['-error_message-'].update(visible=True)
 
         elif event == "-to_save-":
+            print("保存開始")
             save_window = makeSaveWindow()
             event, values = save_window.read()
 
@@ -102,6 +104,7 @@ if __name__=='__main__':
                 save_window.close()
 
             elif event == '-save-':
+                print("保存")
                 fig=mf.makeFig(data)
                 saveFile = values['-saveFile-']
                 plt.savefig(fname = saveFile+"/"+values['-file_name-'])
