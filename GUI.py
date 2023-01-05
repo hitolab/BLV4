@@ -7,8 +7,8 @@ import os
 
 # macかwinでのパス等切り替え
 if os.name == 'nt':
-    data = "results\1\0035_1.txt"
-    saveFile = "results\images"
+    data = "results/1/0035_1.txt"
+    saveFile = "results/images"
 elif os.name == 'posix':
     data = "results/1/0035_1.txt"
     saveFile = "results/images"
