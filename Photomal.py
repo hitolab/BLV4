@@ -8,13 +8,13 @@ import time
 
 class Photomal:
 
-    measuring_cycle = 300  # 60秒間隔で測定(実際は10分くらいで良いと思う);
+    measuring_cycle = 2  # 60秒間隔で測定(実際は10分くらいで良いと思う);
     PMT_VOLTAGE = 1000  # PMTの電圧
     PMT_integraltime = 100  # 積算時間
     PMT_measureTimes = 1  # 計測回数
 
     def __init__(self, no):
-
+        print("no=", +no)
         fileno = len(os.listdir(path="./results/{}".format(no)))+1
         self.no = no
         self.filepath = "./results/{}/{:04}_{}.txt".format(
