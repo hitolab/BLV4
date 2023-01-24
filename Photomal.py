@@ -14,7 +14,7 @@ class Photomal:
     PMT_measureTimes = 1  # 計測回数
 
     def __init__(self, no):
-
+        # "{}".format（）:手前の{}の中に変数()をと置換する。
         fileno = len(os.listdir(path="./results/{}".format(no)))+1
         self.no = no
         self.filepath = "./results/{}/{:04}_{}.txt".format(
