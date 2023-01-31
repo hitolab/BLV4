@@ -9,7 +9,7 @@ import Photomal
 import glob
 import time
 
-cycle = 10  # グラフ更新間隔(秒) (ほんとうは10秒くらいにしたほうが良い)
+cycle = 1  # グラフ更新間隔(秒) (ほんとうは10秒くらいにしたほうが良い)
 
 
 def splitData(text):
@@ -67,7 +67,7 @@ def BLVrun():
         plt.close()
         cv2.imshow('BLV', img)
         # 繰り返し分から抜けるためのif文
-        key = cv2.waitKey(1000*cycle)
+        key = cv2.waitKey(100*cycle)
         if key == ord("h"):
             break
     cv2.destroyAllWindows()
