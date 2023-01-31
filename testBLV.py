@@ -1,4 +1,5 @@
-# グラウを四つ表示させるための練習
+# グラフを四つ表示させるための練習
+# 定義等をループ使ってきれいに書いたが動作せず
 
 import matplotlib.pyplot as plt
 import numpy as np

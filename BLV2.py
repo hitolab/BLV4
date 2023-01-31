@@ -44,7 +44,7 @@ def _getData():
     with open(glob.glob("./results/4/*.txt")[-1]) as f:
         text4 = f.read().splitlines()
         time4, data4 = splitData(text4)
-    return time1, data1, time2, data2, time3, data3, time4, data4
+    return time1, data1, time2, data2,time3, data3, time4, data4
 
 def BLVrun():
     while True:
@@ -64,7 +64,7 @@ def BLVrun():
         ax2 = fig.add_subplot(4, 1, 2)
         ax3 = fig.add_subplot(4, 1, 3)
         ax4 = fig.add_subplot(4, 1, 4)
-
+        
         for n, ax in enumerate([ax1, ax2, ax3, ax4]):
             ax.tick_params(length=0)
             ax.set_xlim(0, 24*display_days[n])
