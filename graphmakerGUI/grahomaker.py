@@ -45,7 +45,7 @@ def makeFig(path):
     for n, ax in enumerate([ax1]):
         ax.tick_params(length=0)
         ax.set_xlim(0, 24*display_days[n])
-        ax.set_ylim(0, 2000)
+        ax.set_ylim(0, 20000)
         # x軸のメモリ、0から24*dis_daysまで、24間隔で配置（numpyを使う利点）
         ax.set_xticks(np.arange(0, 24*(display_days[n]+1), 24))
         # 24毎に点線を引く

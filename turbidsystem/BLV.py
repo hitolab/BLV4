@@ -90,8 +90,8 @@ if __name__ == '__main__':
     pm1 = Photomal.Photomal(1)  # フォトマル1を起動
     pm1.start()  # 周期的測定開始
     print("pm1start")
-    time.sleep(3)
-    pm2 = Photomal.Photomal(2)  # フォトマル1を起動
-    pm2.start()  # 周期的測定開始
-    print("pm2start")
+    # time.sleep(3)
+    # pm2 = Photomal.Photomal(2)  # フォトマル1を起動
+    # pm2.start()  # 周期的測定開始
+    # print("pm2start")
     BLVrun()
