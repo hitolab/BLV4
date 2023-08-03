@@ -4,7 +4,7 @@ from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 import unused.getData as gd
 import time
 import threading
-from Photomal import Photomal
+from turbidsystem.Photomal import Photomal
 import os
 
 # 読み込むファイル

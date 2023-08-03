@@ -2,7 +2,7 @@ import PySimpleGUI as sg
 import io
 import numpy as np
 import matplotlib.pyplot as plt
-import makeFig as mf
+import graphmaker as mf
 import os
 
 # macかwinでのパス等切り替え

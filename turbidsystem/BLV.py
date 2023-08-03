@@ -5,7 +5,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 import cv2
 import datetime
-import Photomal
+import turbidsystem.Photomal as Photomal
 import glob
 import time
 
@@ -32,16 +32,16 @@ def splitData(text):
 
 
 def _getData():
-    with open(glob.glob("./results/1/*.txt")[-1]) as f:
+    with open(glob.glob("./data/results/1/*.txt")[-1]) as f:
         text1 = f.read().splitlines()
         time1, data1 = splitData(text1)
-    with open(glob.glob("./results/2/*.txt")[-1]) as f:
+    with open(glob.glob("./data/results/2/*.txt")[-1]) as f:
         text2 = f.read().splitlines()
         time2, data2 = splitData(text2)
-    with open(glob.glob("./results/3/*.txt")[-1]) as f:
+    with open(glob.glob("./data/results/3/*.txt")[-1]) as f:
         text3 = f.read().splitlines()
         time3, data3 = splitData(text3)
-    with open(glob.glob("./results/4/*.txt")[-1]) as f:
+    with open(glob.glob("./data/results/4/*.txt")[-1]) as f:
         text4 = f.read().splitlines()
         time4, data4 = splitData(text4)
     return time1, data1, time2, data2, time3, data3, time4, data4
