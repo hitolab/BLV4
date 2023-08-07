@@ -5,8 +5,7 @@ import matplotlib.pyplot as plt
 import datetime
 import numpy as np
 
-figDataPath = "/Users/sunao/python_coding/BLV4/results/1/0035_1.txt"
-
+figDataPath = "/Users/tominagatadashi/Desktop/10_data/正データ/202007310802_発光量.txt"
 
 def splitData(text):
     epochlist = []
@@ -31,7 +30,7 @@ def _getData(path):
     return time, data
 
 
-def makeFig(path):
+def makeFig(path,axis):
     # データの取得
     time1, data1 = _getData(path)
 
@@ -45,7 +44,7 @@ def makeFig(path):
     for n, ax in enumerate([ax1]):
         ax.tick_params(length=0)
         ax.set_xlim(0, 24*display_days[n])
-        ax.set_ylim(0, 20000)
+        ax.set_ylim(0, int(axis))
         # x軸のメモリ、0から24*dis_daysまで、24間隔で配置（numpyを使う利点）
         ax.set_xticks(np.arange(0, 24*(display_days[n]+1), 24))
         # 24毎に点線を引く
@@ -57,4 +56,4 @@ def makeFig(path):
 
 
 if __name__ == '__main__':
-    makeFig(figDataPath)
+    makeFig(figDataPath,20000)

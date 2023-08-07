@@ -7,11 +7,13 @@ import os
 
 # macかwinでのパス等切り替え
 if os.name == 'nt':
-    data = "results/1/0035_1.txt"
+    readingData = "results/1/0035_1.txt"
     saveFile = "results/images"
 elif os.name == 'posix':
-    data = "results/1/0035_1.txt"
+    readingData = "/Users/tominagatadashi/Desktop/10_data/正データ/202007310802_発光量.txt"
     saveFile = "results/images"
+
+axis = 5000
 
 # オリジナルテーマの作成
 sg.LOOK_AND_FEEL_TABLE['MyNewTheme'] = {
@@ -46,8 +48,12 @@ def makeHomeWindow():
     # FileBrowseとInputTextは隣に置くだけで連携される
     home_layout = [
         [sg.Text("ファイル選択"), sg.InputText(
-            default_text=data,
+            default_text=readingData,
             key="file1"), sg.FileBrowse(key="file1")
+         ],
+        [sg.Text("軸の高さ"), sg.InputText(
+            default_text=5000,
+            key="axis")
          ],
         [sg.Text("ファイルを選択してください", visible=False, key='-error_message-')],
         [sg.Button("preview", key="-preview-", bind_return_key=True, mouseover_colors=mouseoverColors),
@@ -97,8 +103,9 @@ if __name__ == '__main__':
             print("preview作成")
             if (values['file1']):
                 # 選択したファイルの情報はvalues["file1"]にある
-                data = values['file1']
-                fig_ = mf.makeFig(data)
+                readingData = values['file1']
+                axis = values['axis']
+                fig_ = mf.makeFig(readingData,axis)
                 fig_bytes = draw_plot_image(fig_)
                 window['-image-'].update(data=fig_bytes)
                 window['-to_save-'].update(disabled=False)
@@ -116,7 +123,7 @@ if __name__ == '__main__':
 
             elif event == '-save-':
                 print("保存")
-                fig=mf.makeFig(data)
+                fig=mf.makeFig(readingData)
                 saveFile = values['-saveFile-']
                 plt.savefig(fname=saveFile+"/"+values['-file_name-'])
                 save_window.close()
